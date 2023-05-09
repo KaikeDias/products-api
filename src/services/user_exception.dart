@@ -7,3 +7,8 @@ abstract class UserException {
 class UserNotFound extends UserException {
   UserNotFound() : super(message: 'User not found');
 }
+
+class EmptyUserList extends UserException {
+  EmptyUserList()
+      : super(message: 'No user records were found in the database');
+}

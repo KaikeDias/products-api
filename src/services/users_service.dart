@@ -8,6 +8,10 @@ class UsersService {
     final List<UserModel> allUsers =
         users.map((userMap) => UserModel.fromMap(userMap)).toList();
 
+    if (allUsers.isEmpty) {
+      throw EmptyUserList();
+    }
+
     return allUsers;
   }
 

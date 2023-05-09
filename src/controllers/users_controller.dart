@@ -25,6 +25,12 @@ class UsersController {
           headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
           });
+    } on UserException catch (e) {
+      return Response.notFound(
+        jsonEncode({
+          'error': e.message,
+        }),
+      );
     } catch (e) {
       return Response.internalServerError(
         body: jsonEncode({
