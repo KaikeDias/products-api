@@ -22,8 +22,8 @@ void main(List<String> args) async {
   _router.get('/products/<id>', productsController.getProductById);
   _router.post('/products', productsController.createProduct);
 
-  _router.get('/users', usersController.getAllUsers);
-  _router.post('/users', usersController.authenticateUser);
+  _router.get('/users/listUsers', usersController.getAllUsers);
+  _router.post('/users/login', usersController.authenticateUser);
   _router.post('/users/register', usersController.registerUser);
 
   // Use any available host or container IP (usually `0.0.0.0`).
