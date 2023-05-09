@@ -41,11 +41,12 @@ class UsersController {
   }
 
   FutureOr<Response> authenticateUser(Request request) async {
-    final String body = await request.readAsString();
-    final Map<String, dynamic> userData = jsonDecode(body);
-    final UserModel userModel = UserModel.fromMap(userData);
-
     try {
+      final String body = await request.readAsString();
+      final Map<String, dynamic> userData = jsonDecode(body);
+      print(userData["username"]);
+      final UserModel userModel = UserModel.fromMap(userData);
+
       final UserModel selectedUser =
           await _usersService.authenticateUserService(userModel);
 
@@ -72,11 +73,18 @@ class UsersController {
   }
 
   FutureOr<Response> registerUser(Request request) async {
-    final String body = await request.readAsString();
-    final Map<String, dynamic> userData = jsonDecode(body);
-    final UserModel userModel = UserModel.fromMap(userData);
-
     try {
+      final String body = await request.readAsString();
+      final Map<String, dynamic> userData = jsonDecode(body);
+
+      if (userData["confirmPassword"] != userData["password"]) {
+        throw PasswordMismatch();
+      }
+
+      userData.remove("confirmPassword");
+      print(userData);
+      final UserModel userModel = UserModel.fromMap(userData);
+
       final UserModel newUser =
           await _usersService.registerUserService(userModel);
 
@@ -87,6 +95,12 @@ class UsersController {
           headers: {
             HttpHeaders.contentTypeHeader: 'application/json',
           });
+    } on PasswordMismatch catch (e) {
+      return Response.badRequest(
+        body: jsonEncode({
+          'error': e.message,
+        }),
+      );
     } catch (e) {
       return Response.internalServerError(
         body: jsonEncode({
