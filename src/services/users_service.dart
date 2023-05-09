@@ -25,6 +25,7 @@ class UsersService {
       final UserModel selectedUser = allUsers.firstWhere(
         (user) =>
             user.username == userModel.username &&
+            user.email == userModel.email &&
             user.password == userModel.password,
       );
 
