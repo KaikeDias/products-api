@@ -27,7 +27,7 @@ final List<Map<String, dynamic>> products = [
 ];
 
 final List<Map<String, dynamic>> users = [
-  {"username": "Kaike", "password": "1234"},
-  {"username": "Igor", "password": "4567"},
-  {"username": "Kelson", "password": "5468"}
+  {"username": "Kaike", "email": "kaike@email.com", "password": "1234"},
+  {"username": "Igor", "email": "igor@email.com", "password": "4567"},
+  {"username": "Kelson", "email": "kelson@email.com", "password": "5468"}
 ];
