@@ -13,6 +13,27 @@ class UsersController {
 
   UsersController(this._usersService);
 
+  FutureOr<Response> getAllUsers(Request request) async {
+    try {
+      final List<UserModel> allUsers = await _usersService.findAllUsers();
+
+      return Response.ok(
+          jsonEncode({
+            'users':
+                allUsers.map((user) => user.toMapWithoutPassword()).toList(),
+          }),
+          headers: {
+            HttpHeaders.contentTypeHeader: 'application/json',
+          });
+    } catch (e) {
+      return Response.internalServerError(
+        body: jsonEncode({
+          'error': e.toString(),
+        }),
+      );
+    }
+  }
+
   FutureOr<Response> authenticateUser(Request request) async {
     final String body = await request.readAsString();
     final Map<String, dynamic> userData = jsonDecode(body);
